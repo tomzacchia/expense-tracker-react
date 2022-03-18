@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import PublicOutlet from "~/components/PublicOutlet";
 import HomePage from "~/pages/homepage/Homepage";
 import AuthLayout from "~/features/auth/components/AuthLayout";
-import Login from "~/pages/Login";
+import Login from "~/pages/auth/Login";
 import Signup from "~/pages/Auth/Signup";
 import ResetPassword from "~/pages/Auth/ResetPassword";
 
