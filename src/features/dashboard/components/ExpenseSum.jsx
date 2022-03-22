@@ -32,7 +32,8 @@ function ExpenseSum({ expenses }) {
 export default ExpenseSum;
 
 function calculateSum(expenses) {
-  return expenses.reduce((sum, expense) => (sum += expense.cost), 0);
+  const sum = expenses.reduce((sum, expense) => (sum += expense.cost), 0);
+  return sum.toFixed(2);
 }
 
 function numberWithCommas(num) {

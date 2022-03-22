@@ -50,7 +50,7 @@ function EditExpense(props) {
 export default EditExpense;
 
 function formatExpenseForForm(expense) {
-  expense.cost = parseInt(expense.cost);
+  expense.cost = parseFloat(expense.cost);
   expense.date = new Date(`${expense.date}T00:00:00`);
 
   return expense;

@@ -48,7 +48,9 @@ function ExpenseItem({ description, category, cost, date, id }) {
         <Typography>{description}</Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography fontWeight="bold">$ {cost.toLocaleString()}</Typography>
+        <Typography fontWeight="bold" textAlign="right">
+          $ {cost.toLocaleString()}
+        </Typography>
       </Grid>
     </Grid>
   );
