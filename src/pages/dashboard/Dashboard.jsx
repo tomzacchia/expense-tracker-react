@@ -54,35 +54,32 @@ function Dashboard(props) {
     mainContent = <ExpensesList expenses={expenses} />;
   }
 
-  if (expenses) {
-    return (
-      <Container maxWidth="sm" sx={{ height: "100%" }}>
-        <div
-          style={{
-            paddingTop: "30px",
-            height: "250px",
-            boxSizing: "border-box",
-          }}
-        >
-          <DateYYMMSelector />
-          <ExpenseSum expenses={expenses} />
-        </div>
-        <div
-          style={{
-            paddingTop: "1rem",
-            boxSizing: "border-box",
-            height: "calc(100% - 250px)",
-            overflow: "scroll",
-          }}
-        >
-          {mainContent}
-          {/* <ExpensesList expenses={expenses} /> */}
-        </div>
+  return (
+    <Container maxWidth="sm" sx={{ height: "100%" }}>
+      <div
+        style={{
+          paddingTop: "30px",
+          height: "250px",
+          boxSizing: "border-box",
+        }}
+      >
+        <DateYYMMSelector />
+        <ExpenseSum expenses={expenses} />
+      </div>
+      <div
+        style={{
+          paddingTop: "1rem",
+          boxSizing: "border-box",
+          height: "calc(100% - 250px)",
+          overflow: "scroll",
+        }}
+      >
+        {mainContent}
+      </div>
 
-        <LinkToAddExpenseButton />
-      </Container>
-    );
-  }
+      <LinkToAddExpenseButton />
+    </Container>
+  );
 }
 
 export default Dashboard;
