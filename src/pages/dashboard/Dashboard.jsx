@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { LocalizationProvider, DatePicker } from "@mui/lab";
-import { Input, Container, Button } from "@mui/material";
+import {
+  Input,
+  Container,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
@@ -15,48 +21,65 @@ import { getUserExpensesByYYMM } from "~/features/dashboard/api";
 function Dashboard(props) {
   const { user } = useAuth();
   const [expenses, setExpenses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { date } = useDashboardContext();
 
   useEffect(() => {
     if (user) {
-      getUserExpensesByYYMM(user.uid, date).then((expenses) =>
-        setExpenses(expenses)
-      );
+      getUserExpensesByYYMM(user.uid, date).then((expenses) => {
+        setExpenses(expenses);
+        setIsLoading(false);
+      });
     }
   }, [user, date]);
 
-  if (!expenses) {
-    return <h1> Loading....</h1>;
-  }
+  let mainContent = (
+    <CircularProgress
+      sx={{ position: "fixed", top: "50%", left: "50%", marginLeft: "-20px" }}
+    />
+  );
 
-  if (expenses) {
-    return (
-      <Container maxWidth="sm" sx={{ height: "100%" }}>
-        <div
-          style={{
-            paddingTop: "30px",
-            height: "250px",
-            boxSizing: "border-box",
-          }}
-        >
-          <DateYYMMSelector />
-          <ExpenseSum expenses={expenses} />
-        </div>
-        <div
-          style={{
-            paddingTop: "1rem",
-            boxSizing: "border-box",
-            height: "calc(100% - 250px)",
-            overflow: "scroll",
-          }}
-        >
-          <ExpensesList expenses={expenses} />
-        </div>
+  const noDataForDate = !isLoading && expenses.length === 0;
+  const dataExistsForDate = !isLoading && expenses.length > 0;
 
-        <LinkToAddExpenseButton />
-      </Container>
+  if (noDataForDate) {
+    mainContent = (
+      <Typography variant="h5">
+        Add an expense to start tracking spendings!
+      </Typography>
     );
   }
+
+  if (dataExistsForDate) {
+    mainContent = <ExpensesList expenses={expenses} />;
+  }
+
+  return (
+    <Container maxWidth="sm" sx={{ height: "100%" }}>
+      <div
+        style={{
+          paddingTop: "30px",
+          height: "250px",
+          boxSizing: "border-box",
+        }}
+      >
+        <DateYYMMSelector />
+        <ExpenseSum expenses={expenses} />
+      </div>
+      <div
+        style={{
+          paddingTop: "1rem",
+          boxSizing: "border-box",
+          height: "calc(100% - 250px)",
+          overflow: "scroll",
+        }}
+      >
+        {mainContent}
+      </div>
+
+      <LinkToAddExpenseButton />
+    </Container>
+  );
 }
 
 export default Dashboard;

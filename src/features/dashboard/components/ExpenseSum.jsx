@@ -7,10 +7,11 @@ function ExpenseSum({ expenses }) {
     <>
       <Paper
         sx={{
+          px: 4,
           height: "150px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           backgroundColor: "black",
           borderRadius: "32px",
           color: "white",

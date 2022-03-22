@@ -11,6 +11,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 
+import { capitalizeFirstLetter } from "../utils";
 import styles from "./ExpenseItem.module.css";
 
 function ExpenseItem({ description, category, cost, date, id }) {
@@ -40,12 +41,14 @@ function ExpenseItem({ description, category, cost, date, id }) {
           {iconFactoryByType(category)}
         </Paper>
       </Grid>
-      <Grid item xs={8} sx={{ pl: 4 }}>
-        <Typography fontWeight="bold">{category}</Typography>
+      <Grid item xs={7} sx={{ pl: 2 }}>
+        <Typography fontWeight="bold">
+          {capitalizeFirstLetter(category)}
+        </Typography>
         <Typography>{description}</Typography>
       </Grid>
-      <Grid item xs={2}>
-        <Typography fontWeight="bold">$ {cost}</Typography>
+      <Grid item xs={3}>
+        <Typography fontWeight="bold">$ {cost.toLocaleString()}</Typography>
       </Grid>
     </Grid>
   );
