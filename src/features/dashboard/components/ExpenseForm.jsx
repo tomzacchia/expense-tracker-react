@@ -11,6 +11,8 @@ import { LocalizationProvider, DatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { Button } from "@mui/material";
 
+import { capitalizeFirstLetter } from "../utils";
+
 const categories = [
   "transport",
   "food",
@@ -113,7 +115,7 @@ function ExpenseForm({ initialValues = {}, onSubmit }) {
             >
               {categories.map((category) => (
                 <MenuItem key={category} value={category}>
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                  {capitalizeFirstLetter(category)}
                 </MenuItem>
               ))}
             </Select>
