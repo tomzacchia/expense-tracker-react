@@ -2,7 +2,6 @@ import { useAuth } from "~/features/auth/AuthContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { LocalizationProvider, DatePicker } from "@mui/lab";
 import {
   Input,
   Container,
@@ -11,18 +10,18 @@ import {
   CircularProgress,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import { useDashboardContext } from "~/features/dashboard/DashboardContext";
 import ExpenseSum from "~/features/dashboard/components/ExpenseSum";
 import ExpensesList from "~/features/dashboard/components/ExpensesList";
 import { getUserExpensesByYYMM } from "~/features/dashboard/api";
+import DateYYMMSelector from "~/components/DateYYMMSelector/DateYYMMSelector";
+import { useDateYYMMContext } from "~/components/DateYYMMSelector/DateYYMMContext";
 
 function Dashboard(props) {
   const { user } = useAuth();
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { date } = useDashboardContext();
+  const { date } = useDateYYMMContext();
 
   useEffect(() => {
     if (user) {
@@ -104,55 +103,5 @@ function LinkToAddExpenseButton() {
     >
       <AddIcon />
     </Button>
-  );
-}
-
-const inputStyle = {
-  width: 150,
-  backgroundColor: "#eeeeee",
-  borderRadius: 14,
-  "& .MuiInput-input": {
-    py: 1,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-};
-
-function DateYYMMSelector() {
-  const { date, setDate } = useDashboardContext();
-
-  return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        autoOk={false}
-        views={["year", "month"]}
-        value={date}
-        minDate={new Date("2021-01-01")}
-        maxDate={new Date("2026-01-01")}
-        inputFormat="MMM yyyy"
-        openTo="month"
-        ToolbarComponent={() => <div></div>}
-        onChange={(newValue) => {
-          setDate(newValue);
-        }}
-        renderInput={({ inputRef, inputProps, InputProps }) => (
-          <div
-            style={{
-              marginBottom: "16px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Input
-              sx={inputStyle}
-              size="small"
-              disableUnderline={true}
-              ref={inputRef}
-              {...inputProps}
-            />
-          </div>
-        )}
-      />
-    </LocalizationProvider>
   );
 }

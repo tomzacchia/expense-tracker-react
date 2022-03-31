@@ -1,6 +1,6 @@
 import { Outlet, Route } from "react-router-dom";
 
-import { DashboardContextProvider } from "~/features/dashboard/DashboardContext";
+import { DateYYMMProvider } from "~/components/DateYYMMSelector/DateYYMMContext";
 import Dashboard from "~/pages/dashboard/Dashboard";
 import AddExpense from "~/pages/dashboard/AddExpense";
 import EditExpense from "~/pages/dashboard/EditExpense";
@@ -9,9 +9,9 @@ export const dashboardRoutes = (
   <Route
     path="dashboard"
     element={
-      <DashboardContextProvider>
+      <DateYYMMProvider>
         <Outlet />
-      </DashboardContextProvider>
+      </DateYYMMProvider>
     }
   >
     <Route index element={<Dashboard />} />
