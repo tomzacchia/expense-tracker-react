@@ -6,12 +6,20 @@ import { dashboardRoutes } from "./dashboardRoutes";
 import { logout } from "~/features/auth/api";
 import { Button } from "@mui/material";
 import Stats from "~/pages/stats/Stats";
+import { DateYYMMProvider } from "~/components/DateYYMMSelector/DateYYMMContext";
 
 const appRoutes = (
   <Route path="app" element={<PrivateOutlet />}>
     <Route element={<AppLayout />}>
       {dashboardRoutes}
-      <Route path="stats" element={<Stats />} />
+      <Route
+        path="stats"
+        element={
+          <DateYYMMProvider>
+            <Stats />
+          </DateYYMMProvider>
+        }
+      />
       <Route path="profile" element={<TestProfile />} />
     </Route>
   </Route>

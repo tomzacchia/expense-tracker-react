@@ -7,6 +7,8 @@ import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 
 import { useAuth } from "~/features/auth/AuthContext";
 import { getUserExpensesByYYMM } from "~/features/dashboard/api";
+import { useDateYYMMContext } from "~/components/DateYYMMSelector/DateYYMMContext";
+import DateYYMMSelector from "~/components/DateYYMMSelector/DateYYMMSelector";
 
 // Resolves charts dependancy
 ReactFusioncharts.fcRoot(FusionCharts, FusionTheme);
@@ -40,18 +42,20 @@ const chartConfig = {
 function Stats() {
   const { user } = useAuth();
   const [chartData, setChartData] = useState([]);
+  const { date } = useDateYYMMContext();
 
   useEffect(() => {
     if (user) {
-      getUserExpensesByYYMM(user.uid, new Date()).then((expenses) => {
+      getUserExpensesByYYMM(user.uid, date).then((expenses) => {
         const chartData = formatExpensesForChart(expenses);
 
         setChartData(chartData);
       });
     }
-  }, [user]);
+  }, [user, date]);
   return (
     <>
+      <DateYYMMSelector />
       {chartData && (
         <ReactFusioncharts
           type="doughnut2d"
