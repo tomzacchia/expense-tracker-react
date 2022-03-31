@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 import ExpenseForm from "~/features/dashboard/components/ExpenseForm";
 import { formatFormDataForDb } from "~/features/dashboard/utils";
 import { createExpense } from "~/features/dashboard/api";
-import FormPageHeader from "~/features/dashboard/components/FormPageHeader";
+import FormPageHeader from "~/features/dashboard/components/ExpenseFormHeader";
 import { useNavigate } from "react-router-dom";
 
 function AddExpense(props) {

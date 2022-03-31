@@ -80,7 +80,7 @@ function iconFactoryByType(type) {
     case "payment":
       element = CreditCardIcon;
       break;
-    case "phone":
+    case "electronics":
       element = PhoneIphoneIcon;
       break;
     case "gift":

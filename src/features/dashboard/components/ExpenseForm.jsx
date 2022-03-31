@@ -20,7 +20,7 @@ const categories = [
   "home",
   "shopping",
   "payment",
-  "phone",
+  "electronics",
   "gift",
 ];
 

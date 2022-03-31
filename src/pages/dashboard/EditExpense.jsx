@@ -4,7 +4,7 @@ import { Container, Button } from "@mui/material";
 
 import { formatFormDataForDb } from "~/features/dashboard/utils";
 import { deleteExpense, updateExpense } from "~/features/dashboard/api";
-import FormPageHeader from "~/features/dashboard/components/FormPageHeader";
+import FormPageHeader from "~/features/dashboard/components/ExpenseFormHeader";
 import ExpenseForm from "~/features/dashboard/components/ExpenseForm";
 
 function EditExpense(props) {
