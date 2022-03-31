@@ -5,12 +5,13 @@ import BottomNav from "~/components/BottomNav";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { logout } from "~/features/auth/api";
 import { Button } from "@mui/material";
+import Stats from "~/pages/stats/Stats";
 
 const appRoutes = (
   <Route path="app" element={<PrivateOutlet />}>
     <Route element={<AppLayout />}>
       {dashboardRoutes}
-      <Route path="stats" element={<h1> stats </h1>} />
+      <Route path="stats" element={<Stats />} />
       <Route path="profile" element={<TestProfile />} />
     </Route>
   </Route>

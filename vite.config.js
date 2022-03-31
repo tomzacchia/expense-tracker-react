@@ -8,6 +8,9 @@ const VERCEL_URL = process.env.VERCEL_URL;
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 3001,
+  },
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
