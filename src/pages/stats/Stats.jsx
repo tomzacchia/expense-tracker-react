@@ -12,20 +12,29 @@ import { getUserExpensesByYYMM } from "~/features/dashboard/api";
 ReactFusioncharts.fcRoot(FusionCharts, FusionTheme);
 charts(FusionCharts);
 
-const dataSource = {
-  chart: {
-    pieRadius: 125,
-    showLabels: false,
-    valuePosition: "inside",
-    showValues: true,
-    showLegend: true,
-    legendNumColumns: 2,
-    captionpadding: "0",
-    decimals: "1",
-    plottooltext: "<b>$percentValue</b> spent on <b>$label</b>",
-    theme: "fusion",
-  },
-  // data: [ {label: String, value: ...} ]
+const categoriesColorMap = {
+  transport: "1976d2",
+  food: "9c27b0",
+  general: "ef5350",
+  home: "2e7d32",
+  shopping: "0288d1",
+  payment: "ed6c02",
+  eletronics: "01579b",
+  gift: "1b5e20",
+  default: "7b1fa2",
+};
+
+const chartConfig = {
+  pieRadius: 125,
+  showLabels: false,
+  valuePosition: "inside",
+  showValues: true,
+  showLegend: false,
+  legendNumColumns: 2,
+  captionpadding: "0",
+  decimals: "1",
+  plottooltext: "<b>$percentValue</b> spent on <b>$label</b>",
+  theme: "fusion",
 };
 
 function Stats() {
@@ -47,9 +56,9 @@ function Stats() {
         <ReactFusioncharts
           type="doughnut2d"
           width="100%"
-          height="500"
+          height="400"
           dataFormat="JSON"
-          dataSource={{ ...dataSource, data: chartData }}
+          dataSource={{ chart: chartConfig, data: chartData }}
         />
       )}
       {!chartData && <p> no data </p>}
@@ -70,5 +79,6 @@ function formatExpensesForChart(expenses) {
   return Object.entries(expensesSumByCategory).map((entry) => ({
     label: entry[0],
     value: entry[1],
+    color: categoriesColorMap[entry[0]] || categoriesColorMap.default,
   }));
 }
