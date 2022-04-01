@@ -1,8 +1,15 @@
 import React from "react";
-import { Box, Container, Paper, Typography } from "@mui/material";
+import _ from "lodash";
+import { Paper, Typography } from "@mui/material";
+
+import { calculateExpensesSum, numberWithCommas } from "~/utils/numbers";
 
 function ExpenseSum({ expenses }) {
-  const sum = calculateSum(expenses);
+  const totalExpenses = _.flow(
+    calculateExpensesSum,
+    numberWithCommas
+  )(expenses);
+
   return (
     <>
       <Paper
@@ -22,7 +29,7 @@ function ExpenseSum({ expenses }) {
           Total
         </Typography>
         <Typography variant="h4" fontWeight="bold">
-          $ {numberWithCommas(sum)}
+          $ {totalExpenses}
         </Typography>
       </Paper>
     </>
@@ -30,12 +37,3 @@ function ExpenseSum({ expenses }) {
 }
 
 export default ExpenseSum;
-
-function calculateSum(expenses) {
-  const sum = expenses.reduce((sum, expense) => (sum += expense.cost), 0);
-  return sum.toFixed(2);
-}
-
-function numberWithCommas(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
