@@ -13,22 +13,11 @@ import { useDateYYMMContext } from "~/components/DateYYMMSelector/DateYYMMContex
 import DateYYMMSelector from "~/components/DateYYMMSelector/DateYYMMSelector";
 
 import { numberWithCommas, calculateExpensesSum } from "~/utils/numbers";
+import { categoriesMetadata } from "~/constants";
 
 // Resolves charts dependancy
 ReactFusioncharts.fcRoot(FusionCharts, FusionTheme);
 charts(FusionCharts);
-
-const categoriesColorMap = {
-  transport: "1976d2",
-  food: "9c27b0",
-  general: "ef5350",
-  home: "2e7d32",
-  shopping: "0288d1",
-  payment: "ed6c02",
-  eletronics: "01579b",
-  gift: "1b5e20",
-  default: "7b1fa2",
-};
 
 const chartConfig = {
   pieRadius: 125,
@@ -98,9 +87,13 @@ function formatExpensesForChart(expenses) {
     return acc;
   }, {});
 
-  return Object.entries(expensesSumByCategory).map((entry) => ({
-    label: entry[0],
-    value: entry[1],
-    color: categoriesColorMap[entry[0]] || categoriesColorMap.default,
-  }));
+  return Object.entries(expensesSumByCategory).map((entry) => {
+    const [category, totalCost] = entry;
+    const color = categoriesMetadata[category].pieChartColor;
+    return {
+      label: category,
+      value: totalCost,
+      color: color || categoriesMetadata.default.pieChartColor,
+    };
+  });
 }

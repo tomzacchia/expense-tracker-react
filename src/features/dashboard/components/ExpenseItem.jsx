@@ -13,6 +13,7 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 
 import { capitalizeFirstLetter } from "../utils";
 import styles from "./ExpenseItem.module.css";
+import { categoriesMetadata } from "~/constants";
 
 function ExpenseItem({ description, category, cost, date, id }) {
   const navigate = useNavigate();
@@ -38,7 +39,9 @@ function ExpenseItem({ description, category, cost, date, id }) {
           classes={{ root: styles.paperRoot }}
           sx={{ backgroundColor: "secondary.dark" }}
         >
-          {iconFactoryByType(category)}
+          {React.createElement(categoriesMetadata[category].icon, {
+            style: { color: "white" },
+          })}
         </Paper>
       </Grid>
       <Grid item xs={7} sx={{ pl: 2 }}>
@@ -57,39 +60,3 @@ function ExpenseItem({ description, category, cost, date, id }) {
 }
 
 export default ExpenseItem;
-
-function iconFactoryByType(type) {
-  let element = "";
-
-  switch (type) {
-    case "transport":
-      element = DirectionsCarIcon;
-      break;
-    case "food":
-      element = LocalDiningIcon;
-      break;
-    case "general":
-      element = LocalOfferIcon;
-      break;
-    case "home":
-      element = HomeIcon;
-      break;
-    case "shopping":
-      element = ShoppingCartIcon;
-      break;
-    case "payment":
-      element = CreditCardIcon;
-      break;
-    case "electronics":
-      element = PhoneIphoneIcon;
-      break;
-    case "gift":
-      element = CardGiftcardIcon;
-      break;
-    default:
-      element = LocalOfferIcon;
-      break;
-  }
-
-  return React.createElement(element, { style: { color: "white" } });
-}
