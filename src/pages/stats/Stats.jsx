@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
+
+import { Card, CardContent, Container, Typography } from "@mui/material";
 import FusionCharts from "fusioncharts";
 import charts from "fusioncharts/fusioncharts.charts";
 import ReactFusioncharts from "react-fusioncharts";
@@ -9,6 +11,8 @@ import { useAuth } from "~/features/auth/AuthContext";
 import { getUserExpensesByYYMM } from "~/features/dashboard/api";
 import { useDateYYMMContext } from "~/components/DateYYMMSelector/DateYYMMContext";
 import DateYYMMSelector from "~/components/DateYYMMSelector/DateYYMMSelector";
+
+import { numberWithCommas, calculateExpensesSum } from "~/utils/numbers";
 
 // Resolves charts dependancy
 ReactFusioncharts.fcRoot(FusionCharts, FusionTheme);
@@ -35,38 +39,52 @@ const chartConfig = {
   legendNumColumns: 2,
   captionpadding: "0",
   decimals: "1",
-  plottooltext: "<b>$percentValue</b> spent on <b>$label</b>",
+  plottooltext: "$<b>$value</b> spent on <b>$label</b>",
   theme: "fusion",
 };
 
 function Stats() {
   const { user } = useAuth();
-  const [chartData, setChartData] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const { date } = useDateYYMMContext();
 
   useEffect(() => {
     if (user) {
       getUserExpensesByYYMM(user.uid, date).then((expenses) => {
-        const chartData = formatExpensesForChart(expenses);
-
-        setChartData(chartData);
+        setExpenses(expenses);
       });
     }
   }, [user, date]);
+
+  const chartData = formatExpensesForChart(expenses);
+  const expensesTotal = _.flow(
+    calculateExpensesSum,
+    numberWithCommas
+  )(expenses);
+
   return (
-    <>
+    <Container sx={{ py: 4, height: "100%" }}>
       <DateYYMMSelector />
+
+      <Card>
+        <CardContent>
+          <Typography variant="h4" fontWeight="bold">
+            Total {expensesTotal || 0} $
+          </Typography>
+        </CardContent>
+      </Card>
+
       {chartData && (
         <ReactFusioncharts
           type="doughnut2d"
           width="100%"
-          height="400"
+          height="350"
           dataFormat="JSON"
           dataSource={{ chart: chartConfig, data: chartData }}
         />
       )}
       {!chartData && <p> no data </p>}
-    </>
+    </Container>
   );
 }
 
